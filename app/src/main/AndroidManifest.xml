@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:dist="http://schemas.android.com/apk/distribution"
+          package="com.example.themessenger">
+
+    <dist:module dist:instant="true"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+
+
+    <application
+            android:name=".baseApp"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="MessageON"
+            android:roundIcon="@drawable/ic_logo"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@drawable/ic_logo" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorAccent" />
+
+        <activity android:name=".ChatLog">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".letsmessage"/>
+        </activity>
+        <activity android:name=".NewMessage">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".letsmessage"/>
+        </activity>
+        <activity android:name=".RegisterActivity">
+        </activity>
+        <activity android:name=".LoginActivity">
+        </activity>
+        <activity android:name=".letsmessage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

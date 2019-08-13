@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "609487262321",
+    "firebase_url": "https://themessenger-62bb5.firebaseio.com",
+    "project_id": "themessenger-62bb5",
+    "storage_bucket": "themessenger-62bb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609487262321:android:2209f16a6c8e34ce",
+        "android_client_info": {
+          "package_name": "com.example.themessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609487262321-1sbl2tklaaoctpllnf4imkmg8n81iaue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSHeMQLyYHc3Cl3PIV31VdT0Ut0fYPN-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609487262321-1sbl2tklaaoctpllnf4imkmg8n81iaue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

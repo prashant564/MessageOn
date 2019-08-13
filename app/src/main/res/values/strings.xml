@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TheMessenger</string>
+    <string name="channel_name">"Channel 123"</string>
+    <string name="channel_description">"welcome to the channel"</string>
+</resources>
