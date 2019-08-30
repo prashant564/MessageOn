@@ -7,6 +7,10 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.app.Application
+import com.google.firebase.database.FirebaseDatabase
+import com.jakewharton.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
+import okhttp3.OkHttpClient
 
 class baseApp: Application() {
 
@@ -18,6 +22,14 @@ class baseApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+
+
+        val client = OkHttpClient()
+        val picasso = Picasso.Builder(this).downloader(OkHttp3Downloader(client)).build()
 
         createNotificationChannels();
     }

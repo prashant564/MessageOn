@@ -53,6 +53,7 @@ class ChatLog : AppCompatActivity() {
 
 
         val ref = FirebaseDatabase.getInstance().getReference("/user_messages/$fromId/$toid")
+        ref.keepSynced(true)
 
         ref.addChildEventListener(object : ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -110,7 +111,9 @@ class ChatLog : AppCompatActivity() {
 //        val ref = FirebaseDatabase.getInstance().getReference("/messages").push()
 
         val ref = FirebaseDatabase.getInstance().getReference("/user_messages/$fromId/$toId").push()
+        ref.keepSynced(true)
         val to_ref = FirebaseDatabase.getInstance().getReference("/user_messages/$toId/$fromId").push()
+        to_ref.keepSynced(true)
 
         if(fromId==null) return
 
@@ -128,10 +131,13 @@ class ChatLog : AppCompatActivity() {
         to_ref.setValue(messages)
 
         val referenceLatestMessage = FirebaseDatabase.getInstance().getReference("/latest_messages/$fromId/$toId")
+        referenceLatestMessage.keepSynced(true)
         referenceLatestMessage.setValue(messages)
 
 
+
         val referenceToLatestMessage = FirebaseDatabase.getInstance().getReference("/latest_messages/$toId/$fromId")
+        referenceToLatestMessage.keepSynced(true)
         referenceToLatestMessage.setValue(messages)
     }
 }

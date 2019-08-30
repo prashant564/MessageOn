@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.themessenger.NewMessage.Companion.USER_KEY
 import com.example.themessenger.baseApp.Companion.channel_id
 import com.example.themessenger.models.Messages
@@ -52,7 +54,7 @@ class letsmessage : AppCompatActivity() {
         }
 
         fetchCurrentUser()
-
+        runAnimation(recyclerview_home_page)
         listenForLatestMessages()
 
         verifyUserIsLoggedIn()
@@ -63,6 +65,7 @@ class letsmessage : AppCompatActivity() {
 
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        ref.keepSynced(true)
 
         ref.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -92,6 +95,7 @@ class letsmessage : AppCompatActivity() {
 
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/latest_messages/$fromId")
+        ref.keepSynced(true)
 
         ref.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -138,6 +142,7 @@ class letsmessage : AppCompatActivity() {
                 }
 
                 val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+                ref.keepSynced(true)
                 ref.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
 
@@ -179,6 +184,11 @@ class letsmessage : AppCompatActivity() {
 
             }
         })
+    }
+
+    private fun runAnimation(recyclerView: RecyclerView){
+        val animation = AnimationUtils.loadLayoutAnimation(this,R.anim.layout_from_right)
+        recyclerView.layoutAnimation = animation
     }
 
 

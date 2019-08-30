@@ -6,7 +6,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themessenger.letsmessage.Companion.currentUser
 import com.example.themessenger.models.User
@@ -29,7 +32,9 @@ class NewMessage : AppCompatActivity() {
         setContentView(R.layout.activity_new_message)
         supportActionBar?.title = "Select User"
 
+        runMessageAnimation(user_list_recyclerView)
         fetchUsers()
+
 
     }
 
@@ -41,6 +46,7 @@ class NewMessage : AppCompatActivity() {
     private fun fetchUsers(){
 
         val ref = FirebaseDatabase.getInstance().getReference("/users")
+        ref.keepSynced(true)
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
 
 
@@ -82,6 +88,14 @@ class NewMessage : AppCompatActivity() {
             }
         })
     }
+
+    private fun runMessageAnimation(recyclerView: RecyclerView){
+        val animation = AnimationUtils.loadLayoutAnimation(this,R.anim.layout_from_right)
+        recyclerView.layoutAnimation = animation
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    }
+
+
 }
 
 class UserItem(val user: User) : Item<ViewHolder>(){
