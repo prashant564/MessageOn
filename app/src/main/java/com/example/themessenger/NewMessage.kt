@@ -3,10 +3,13 @@ package com.example.themessenger
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
@@ -21,8 +24,10 @@ import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
+import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_new_message.*
+import kotlinx.android.synthetic.main.user_row_newmessage.*
 import kotlinx.android.synthetic.main.user_row_newmessage.view.*
 
 class NewMessage : AppCompatActivity() {
@@ -45,48 +50,66 @@ class NewMessage : AppCompatActivity() {
 
     private fun fetchUsers(){
 
-        val ref = FirebaseDatabase.getInstance().getReference("/users")
-        ref.keepSynced(true)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+
+        this@NewMessage.runOnUiThread(object:Runnable{
+
+            override fun run() {
 
 
-            override fun onDataChange(p0: DataSnapshot) {
+                val ref = FirebaseDatabase.getInstance().getReference("/users")
+                ref.keepSynced(true)
+                ref.addListenerForSingleValueEvent(object : ValueEventListener{
 
-                val adapter = GroupAdapter<ViewHolder>()
-                p0.children.forEach{
-                    val user = it.getValue(User::class.java)
 
-                    if(user!=null){
+                    override fun onDataChange(p0: DataSnapshot) {
 
-                        if(user.username != currentUser?.username){
+                        val adapter = GroupAdapter<ViewHolder>()
+                        p0.children.forEach{
+                            val user = it.getValue(User::class.java)
 
-                            adapter.add(UserItem(user))
+                            if(user!=null){
+
+                                if(user.username != currentUser?.username){
+
+                                    adapter.add(UserItem(user))
+                                }
+
+
+                            }
+
                         }
 
+                        adapter.setOnItemClickListener(object: OnItemClickListener {
+
+                            @RequiresApi(Build.VERSION_CODES.M)
+                            override fun onItemClick(item: Item<*>, view: View) {
+
+                                view.setBackgroundColor(getColor(R.color.button))
+                                val userItem = item as UserItem
+                                val intent = Intent(view.context, ChatLog::class.java)
+                                intent.putExtra(USER_KEY,userItem.user)
+                                startActivity(intent)
+                                finish()
+                            }
+                        })
+
+
+
+
+                        user_list_recyclerView.adapter = adapter
 
                     }
 
-                }
+                    override fun onCancelled(p0: DatabaseError) {
 
-                adapter.setOnItemClickListener {item, view ->
-
-                    val userItem = item as UserItem
-                    val intent = Intent(view.context, ChatLog::class.java)
-                    intent.putExtra(USER_KEY,userItem.user)
-
-                    startActivity(intent)
-
-                    finish()
-                }
-
-                user_list_recyclerView.adapter = adapter
+                    }
+                })
 
             }
 
-            override fun onCancelled(p0: DatabaseError) {
 
-            }
         })
+
     }
 
     private fun runMessageAnimation(recyclerView: RecyclerView){

@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
             editText_login_email.requestFocus()
             return
         }
-
+//
 //        if (!Patterns.EMAIL_ADDRESS.matcher(editText_email.text.toString()).matches()) {
 //            editText_email.error = "Please enter valid email"
 //            editText_email.requestFocus()
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
                     updateUI(user)
-
+//                    startActivity(Intent(this@LoginActivity, letsmessage::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)

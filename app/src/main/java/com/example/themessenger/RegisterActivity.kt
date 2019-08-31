@@ -22,6 +22,7 @@ import java.util.*
 
 
 private val TAG = "Dikkat aagyi"
+var clicked: Boolean = false
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -46,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
 
         button_photo_select_register.setOnClickListener {
             Log.d("MainActivity","try to show")
-
+            clicked = true
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent,0)
@@ -96,6 +97,10 @@ class RegisterActivity : AppCompatActivity() {
             editText_password.requestFocus()
             return
         }
+        if(!clicked){
+            Toast.makeText(baseContext,"Please select a photo",Toast.LENGTH_SHORT).show()
+            return
+        }
 
         auth.createUserWithEmailAndPassword(editText_email.text.toString(), editText_password.text.toString())
             .addOnCompleteListener(this) { task ->
@@ -103,7 +108,8 @@ class RegisterActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     uploadImagetoFirebaseStorage()
-                    startActivity(Intent(this@RegisterActivity,LoginActivity::class.java))
+                    startActivity(Intent(this@RegisterActivity,letsmessage::class.java))
+                    finish()
 
 
                 } else {

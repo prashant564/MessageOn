@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
@@ -36,12 +37,31 @@ class ChatLog : AppCompatActivity() {
 
         var user: User = intent.getParcelableExtra<User>(NewMessage.USER_KEY)
         supportActionBar?.title = user.username
-        listenForMessages()
 
-        button_send_message.setOnClickListener {
-            Log.d("ChatLog","Trying to send amessage")
-            performSendMessage()
+
+            listenForMessages()
+                button_send_message.setOnClickListener {
+
+                    if(editText_enter_message.toString().isEmpty()){
+                        editText_enter_message.error = "enter the text to send"
+                        editText_enter_message.requestFocus()
+                    }
+                    else{
+
+//                        Toast.makeText(baseContext,"enter the text to send",Toast.LENGTH_SHORT).show()
+                        Log.d("ChatLog","Trying to send amessage")
+                        performSendMessage()
+                    }
+
+
+
+            }
+
         }
+
+
+
+    override fun onBackPressed() {
 
     }
 
@@ -102,6 +122,8 @@ class ChatLog : AppCompatActivity() {
 
     private fun performSendMessage(){
         //send message to firebase
+
+
 
         val text = editText_enter_message.text.toString()
         val fromId = FirebaseAuth.getInstance().uid

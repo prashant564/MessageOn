@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".letsmessage"
-        android:background="@android:color/darker_gray">
+        android:background="@drawable/rounded_letsmessage">
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"

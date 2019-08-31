@@ -3,10 +3,13 @@
     <color name="colorPrimary">#51D8C7</color>
     <color name="colorPrimaryDark">#51d8c7</color>
     <color name="colorAccent">#FFFFFF</color>
-    <color name="colorBackground">#413e4f</color>
+    <color name="Background">#373737</color>
     <color name="colorText">#000000</color>
     <color name="colorTextHint">#51d8c7</color>
     <color name="theme_1">#FFFFFF</color>
     <color name="theme_2">#ED2939</color>
-    <color name="button">#FF0000</color>
+    <color name="button">#00899e</color>
+    <color name="navbar">#0f0f0f</color>
+    <color name="chatbox">#005866</color>
+    <color name="letsmessage">#373737</color>
 </resources>
