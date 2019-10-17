@@ -17,6 +17,7 @@
             android:background="@drawable/rounded_entermessage"
             android:ems="10"
             android:hint="Enter Message"
+            android:paddingLeft="12dp"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_send_message"
@@ -26,8 +27,8 @@
     <Button
             android:id="@+id/button_send_message"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="6dp"
             android:background="@drawable/rounded_button_inside_app"
             android:text="Send"
             android:textColor="@color/theme_1"
