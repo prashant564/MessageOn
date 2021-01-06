@@ -44,71 +44,63 @@ class NewMessage : AppCompatActivity() {
     }
 
     companion object{
-        val USER_KEY = "USER_KEY"
+        const val USER_KEY = "USER_KEY"
     }
 
 
     private fun fetchUsers(){
 
 
-        this@NewMessage.runOnUiThread(object:Runnable{
-
-            override fun run() {
-
-
-                val ref = FirebaseDatabase.getInstance().getReference("/users")
-                ref.keepSynced(true)
-                ref.addListenerForSingleValueEvent(object : ValueEventListener{
+        this@NewMessage.runOnUiThread {
+            val ref = FirebaseDatabase.getInstance().getReference("/users")
+            ref.keepSynced(true)
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
 
 
-                    override fun onDataChange(p0: DataSnapshot) {
+                override fun onDataChange(p0: DataSnapshot) {
 
-                        val adapter = GroupAdapter<ViewHolder>()
-                        p0.children.forEach{
-                            val user = it.getValue(User::class.java)
+                    val adapter = GroupAdapter<ViewHolder>()
+                    p0.children.forEach {
+                        val user = it.getValue(User::class.java)
 
-                            if(user!=null){
+                        if (user != null) {
 
-                                if(user.username != currentUser?.username){
+                            if (user.username != currentUser?.username) {
 
-                                    adapter.add(UserItem(user))
-                                }
-
-
+                                adapter.add(UserItem(user))
                             }
+
 
                         }
 
-                        adapter.setOnItemClickListener(object: OnItemClickListener {
-
-                            @RequiresApi(Build.VERSION_CODES.M)
-                            override fun onItemClick(item: Item<*>, view: View) {
-
-                                view.setBackgroundColor(getColor(R.color.button))
-                                val userItem = item as UserItem
-                                val intent = Intent(view.context, ChatLog::class.java)
-                                intent.putExtra(USER_KEY,userItem.user)
-                                startActivity(intent)
-                                finish()
-                            }
-                        })
-
-
-
-
-                        user_list_recyclerView.adapter = adapter
-
                     }
 
-                    override fun onCancelled(p0: DatabaseError) {
+                    adapter.setOnItemClickListener(object : OnItemClickListener {
 
-                    }
-                })
+                        @RequiresApi(Build.VERSION_CODES.M)
+                        override fun onItemClick(item: Item<*>, view: View) {
 
-            }
+                            view.setBackgroundColor(getColor(R.color.button))
+                            val userItem = item as UserItem
+                            val intent = Intent(view.context, ChatLog::class.java)
+                            intent.putExtra(USER_KEY, userItem.user)
+                            startActivity(intent)
+                            finish()
+                        }
+                    })
 
 
-        })
+
+
+                    user_list_recyclerView.adapter = adapter
+
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+
+                }
+            })
+        }
 
     }
 

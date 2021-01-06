@@ -22,15 +22,9 @@ class baseApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-
-
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-
-
         val client = OkHttpClient()
         val picasso = Picasso.Builder(this).downloader(OkHttp3Downloader(client)).build()
-
         createNotificationChannels();
     }
 
